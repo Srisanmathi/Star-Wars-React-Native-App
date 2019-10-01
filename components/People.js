@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, FlatList } from 'react-native'
 import { Card } from 'react-native-elements'
 
-export default class Film extends Component {
+export default class People extends Component {
 
   //for header
   static navigationOptions = {
-    title: 'Films',
+    title: 'People',
     headerStyle: {
       backgroundColor: '#00bfff',
     },
@@ -15,19 +15,18 @@ export default class Film extends Component {
       fontWeight: 'bold',
     },
   };
-
   constructor(props) {
     super(props);
     this.state = {
       loading: 'initial',
-      film: []
+      people: []
     }
   }
 
   componentDidMount() {
 
     this.setState({ loading: 'true' });
-    const apiUrl = 'https://swapi.co/api/films/';
+    const apiUrl = 'https://swapi.co/api/people/';
     this.loadData(apiUrl);
 
   }
@@ -40,28 +39,27 @@ export default class Film extends Component {
       .then((r) => r.json())
 
       .then((json) => {
-
+        
         for (let i = 0; i < json.results.length; i++) {
-
-          let film = {
-            title: json.results[i].title,
-            episode_id: json.results[i].episode_id,
-            opening_crawl: json.results[i].opening_crawl,
-            director: json.results[i].director,
-            producer: json.results[i].producer,
-            release_date: json.results[i].release_date
+          let people = {
+            name: json.results[i].name,
+            height: json.results[i].height,
+            mass: json.results[i].mass,
+            hair_color: json.results[i].hair_color,
+            gender: json.results[i].gender,
           }
 
-          temp.push(film);
+          temp.push(people);
         }
 
         this.setState({
-          film: temp,
+          people: temp,
           loading: "false"
         })
 
       }).catch((error) => {
         this.setState({ loading: 'failed' });
+        console.log('Api call failed.');
 
       });
 
@@ -80,26 +78,25 @@ export default class Film extends Component {
     }
 
     if (this.state.loading === 'failed') {
-      console.log('Api call failed.');
-      return <Text style={styles.loading}>API call failed. Try again later!</Text>;
-    }
+        console.log('Api call failed.');
+        return <Text style={styles.loading}>API call failed. Try again later!</Text>;
+      }
 
     return (
       
         <FlatList
           extraData={this.state}
-          data={this.state.film}
+          data={this.state.people}
           renderItem={({ item }) => (
             <Card
           title={item.title}
         >
-          <Text style={styles.entry}>EPISODE ID            :  {item.episode_id}</Text>
-                  <Text style={styles.entry}>DIRECTOR              :  {item.director}</Text>
-                  <Text style={styles.entry}>PRODUCER            :  {item.producer}</Text>
-                  <Text style={styles.entry}>RELEASE DATE     :  {item.release_date}</Text>
-                  <Text style={styles.entry}>{`OPENING CRAWL : 
-
-      ${item.opening_crawl}`}</Text>
+          <Text style={styles.entry}>NAME                :  {item.name}</Text>
+                  <Text style={styles.entry}>HEIGHT             :  {item.height}</Text>
+                  <Text style={styles.entry}>MASS                :  {item.mass}</Text>
+                  <Text style={styles.entry}>HAIR COLOR     :  {item.hair_color}</Text>
+                  <Text style={styles.entry}>GENDER            :  {item.gender}</Text>
+                 
 </Card>
 
           )}
@@ -112,9 +109,6 @@ export default class Film extends Component {
 }
 
 const styles = StyleSheet.create({
-  background:{
-    backgroundColor:"yellow"
-        },
 
   loading: {
     marginTop: 20,

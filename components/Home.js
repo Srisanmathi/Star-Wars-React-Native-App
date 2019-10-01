@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class Home extends Component {
-
+//for header
+static navigationOptions = {
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: 'white',
+    },
+    headerTintColor: 'black',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
 
 
     constructor(props) {
@@ -15,19 +25,18 @@ export default class Home extends Component {
         }
     }
 
-    componentDidMount() {
-
-
-
-    }
-
 
     render() {
 
         const {navigate} = this.props.navigation;
         return (
 
-            <View>
+            <View style={styles.background}>
+                <Text style={styles.title}>STAR WARS!</Text>
+                <View style={styles.image}>
+                <Image source={require('../images/starWars.png')} />
+                </View>
+               
                 <View style={styles.button}>
                 <Button style={{ paddingTop: 50 }}
                     title="Films"
@@ -52,35 +61,29 @@ export default class Home extends Component {
                 />
                 </View>
 
-                <View style={styles.button}>
-                <Button style={{ paddingTop: 50 }}
-                    title="Spaceships"
-                    type="solid"
-                    onPress={() => navigate('Spaceship')}
-                />
-                </View>
-                <View style={styles.button}>
-                <Button style={{ paddingTop: 50 }}
-                    title="Vehicles"
-                    type="solid"
-                    onPress={() => navigate('Vehicle')}
-                />
-                </View>
-                <View style={styles.button}>
-                <Button style={{ paddingTop: 50 }}
-                    title="Species"
-                    type="solid"
-                    onPress={() => navigate('Species')}
-                />
-                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    background:{
+backgroundColor:"grey"
+    },
+
+title: {
+    marginTop:20,
+    marginLeft:100,
+    fontSize: 30,
+    fontWeight:"bold"
+},    
+image: {
+    marginLeft:80,
+    marginTop:20,
+    marginBottom:20
+},
 button: {
-    paddingVertical:30,
+    paddingVertical:20,
     paddingHorizontal:60
 }
 
